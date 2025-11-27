@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# macOS
+.DS_Store
+*.app
+
+# Backups e arquivos temporários
+*.backup
+*.tmp
+draft.extra*
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# User data (não versionar histórico de usuários)
+.capcut_organizer/
+
+# Test files
+mock_*.json
+test_*.json
+textReading/
+draft_info.json
+draft_meta_info.json
