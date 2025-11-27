@@ -122,9 +122,18 @@ class Api:
             window = webview.windows[0]
             file_types = ('CapCut Files (*.json;*.tmp)', 'All Files (*.*)')
             
-            # Default to CapCut projects folder
+            # Default to CapCut projects folder (cross-platform)
             import os.path
-            capcut_path = os.path.expanduser('~/Movies/CapCut/User Data/Projects/com.lveditor.draft')
+            import platform
+            
+            if platform.system() == 'Windows':
+                capcut_path = os.path.join(
+                    os.environ.get('LOCALAPPDATA', ''),
+                    'CapCut', 'User Data', 'Projects', 'com.lveditor.draft'
+                )
+            else:
+                capcut_path = os.path.expanduser('~/Movies/CapCut/User Data/Projects/com.lveditor.draft')
+            
             initial_dir = capcut_path if os.path.exists(capcut_path) else os.path.expanduser('~')
             
             result = window.create_file_dialog(
@@ -184,9 +193,20 @@ class Api:
             window = webview.windows[0]
             file_types = ('CapCut Files (*.json;*.tmp)', 'All Files (*.*)')
             
-            # Default to CapCut projects folder
+            # Default to CapCut projects folder (cross-platform)
             import os.path
-            capcut_path = os.path.expanduser('~/Movies/CapCut/User Data/Projects/com.lveditor.draft')
+            import platform
+            
+            if platform.system() == 'Windows':
+                # Windows: C:\Users\USERNAME\AppData\Local\CapCut\User Data\Projects\com.lveditor.draft
+                capcut_path = os.path.join(
+                    os.environ.get('LOCALAPPDATA', ''),
+                    'CapCut', 'User Data', 'Projects', 'com.lveditor.draft'
+                )
+            else:
+                # macOS/Linux
+                capcut_path = os.path.expanduser('~/Movies/CapCut/User Data/Projects/com.lveditor.draft')
+            
             initial_dir = capcut_path if os.path.exists(capcut_path) else os.path.expanduser('~')
             
             result = window.create_file_dialog(

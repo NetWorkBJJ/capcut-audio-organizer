@@ -31,27 +31,29 @@
 ## 🚀 Instalação Rápida
 
 ### Requisitos
-- macOS 10.13+
-- Python 3.8+
+- **macOS:** 10.13+
+- **Windows:** 10/11
+- **Python:** 3.8+
 
-### Opção 1: Executar Diretamente
+### macOS
+
 ```bash
-# Clone o repositório
 git clone https://github.com/NetWorkBJJ/capcut-audio-organizer.git
 cd capcut-audio-organizer
-
-# Execute
+./install.sh
 ./StartApp.command
 ```
 
-### Opção 2: Criar App Bundle
-```bash
-# Cria CapCut Audio Organizer.app
-./build_app.sh
+### Windows
 
-# Mova para Applications
-mv "CapCut Audio Organizer.app" /Applications/
+```cmd
+git clone https://github.com/NetWorkBJJ/capcut-audio-organizer.git
+cd capcut-audio-organizer
+install_windows.bat
+StartApp.bat
 ```
+
+**📖 [Guia Completo Windows](README_WINDOWS.md)**
 
 ---
 
