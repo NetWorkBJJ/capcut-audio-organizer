@@ -1,6 +1,6 @@
 # 🎉 CapCut Audio Organizer - Projeto Completo
 
-![Project Showcase](/Users/network/.gemini/antigravity/brain/ef7cd519-0a0f-4553-8ff0-e33292ebe0ee/project_showcase_1764265961639.png)
+![Project Showcase](.github/showcase.png)
 
 ---
 
