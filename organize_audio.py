@@ -282,6 +282,68 @@ def check_for_newer_files(selected_file):
         return True
     return False
 
+def list_backups(file_path):
+    """List all backup files in the same directory."""
+    dir_path = os.path.dirname(os.path.abspath(file_path))
+    backups = []
+    
+    for f in os.listdir(dir_path):
+        if f.endswith('.backup'):
+            full_path = os.path.join(dir_path, f)
+            stat = os.stat(full_path)
+            backups.append({
+                'name': f,
+                'path': full_path,
+                'size': stat.st_size,
+                'modified': stat.st_mtime
+            })
+    
+    return sorted(backups, key=lambda x: x['modified'], reverse=True)
+
+def restore_backup(backup_path):
+    """Restore a backup file."""
+    if not os.path.exists(backup_path):
+        return {"success": False, "message": "Backup não encontrado"}
+    
+    # Get original filename (remove .backup extension)
+    original_path = backup_path.replace('.backup', '')
+    
+    try:
+        # Backup the current file before restoring
+        if os.path.exists(original_path):
+            temp_backup = original_path + '.pre-restore-backup'
+            shutil.copy(original_path, temp_backup)
+        
+        # Restore
+        shutil.copy(backup_path, original_path)
+        
+        return {
+            "success": True, 
+            "message": f"Backup restaurado: {os.path.basename(original_path)}"
+        }
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+
+def setup_logging():
+    """Setup logging system."""
+    import logging
+    from logging.handlers import RotatingFileHandler
+    
+    log_dir = os.path.expanduser('~/.capcut_organizer/logs')
+    os.makedirs(log_dir, exist_ok=True)
+    
+    log_file = os.path.join(log_dir, 'app.log')
+    
+    handler = RotatingFileHandler(log_file, maxBytes=10*1024*1024, backupCount=5)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    
+    logger = logging.getLogger('capcut_organizer')
+    logger.setLevel(logging.INFO)
+    logger.addHandler(handler)
+    
+    return logger
+
 import sys
 
 if __name__ == "__main__":

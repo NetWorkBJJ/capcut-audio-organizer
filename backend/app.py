@@ -100,6 +100,70 @@ class Api:
     def __init__(self):
         self.selected_file = None
 
+    def get_backups(self, file_path):
+        """Get list of backups for a file."""
+        try:
+            backups = list_backups(file_path)
+            return {"success": True, "backups": backups}
+        except Exception as e:
+            return {"success": False, "message": str(e)}
+
+    def restore_backup_file(self, backup_path):
+        """Restore a backup file."""
+        try:
+            result = restore_backup(backup_path)
+            return result
+        except Exception as e:
+            return {"success": False, "message": str(e)}
+
+    def batch_process(self):
+        """Process multiple files at once."""
+        try:
+            window = webview.windows[0]
+            file_types = ('CapCut Files (*.json;*.tmp)', 'All Files (*.*)')
+            
+            # Default to CapCut projects folder
+            import os.path
+            capcut_path = os.path.expanduser('~/Movies/CapCut/User Data/Projects/com.lveditor.draft')
+            initial_dir = capcut_path if os.path.exists(capcut_path) else os.path.expanduser('~')
+            
+            result = window.create_file_dialog(
+                webview.OPEN_DIALOG, 
+                allow_multiple=True,  # Allow multiple files
+                file_types=file_types,
+                directory=initial_dir
+            )
+            
+            if not result:
+                return {"success": False, "message": "Seleção cancelada."}
+            
+            # Process all files
+            results = []
+            for file_path in result:
+                try:
+                    success = organize_audio(file_path)
+                    results.append({
+                        "file": os.path.basename(file_path),
+                        "success": success,
+                        "message": "Processado" if success else "Já estava organizado"
+                    })
+                except Exception as e:
+                    results.append({
+                        "file": os.path.basename(file_path),
+                        "success": False,
+                        "message": str(e)
+                    })
+            
+            return {
+                "success": True,
+                "total": len(results),
+                "processed": sum(1 for r in results if r['success']),
+                "results": results
+            }
+                
+        except Exception as e:
+            return {"success": False, "message": str(e)}
+
     def process_selected(self):
         """Process the previously selected/previewed file."""
         if not self.selected_file:

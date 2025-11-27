@@ -67,6 +67,15 @@
                 <p>Escolha o arquivo <code>template-2.tmp</code></p>
             </div>
 
+            <div class="actions-row">
+                <button class="action-btn" id="btnBatch">
+                    📦 Processar Lote
+                </button>
+                <button class="action-btn" id="btnBackups">
+                    💾 Gerenciar Backups
+                </button>
+            </div>
+
             <div class="history-section" id="historySection" style="display: none;">
                 <h3>📜 Histórico Recente</h3>
                 <div id="historyList"></div>
@@ -112,6 +121,26 @@
             <h3 id="statusTitle">Processando...</h3>
             <p id="statusMessage">Aguarde...</p>
             <button class="btn-reset" id="btnReset" style="display: none;">Processar Outro</button>
+        </div>
+    </div>
+
+    <!-- Batch Results Modal -->
+    <div class="modal" id="batchModal">
+        <div class="modal-content">
+            <h2>📦 Processamento em Lote</h2>
+            <div id="batchProgress"></div>
+            <div id="batchResults"></div>
+            <button class="btn-primary" id="btnCloseBatch" style="display: none;">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Backup Manager Modal -->
+    <div class="modal" id="backupModal">
+        <div class="modal-content">
+            <h2>💾 Gerenciar Backups</h2>
+            <p class="subtitle">Backups disponíveis para este projeto</p>
+            <div id="backupsList"></div>
+            <button class="btn-secondary" id="btnCloseBackup">Fechar</button>
         </div>
     </div>
 

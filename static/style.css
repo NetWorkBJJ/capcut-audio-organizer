@@ -152,6 +152,97 @@ code {
     color: var(--accent-primary);
 }
 
+/* Action Buttons Row */
+.actions-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.action-btn {
+    flex: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: rgba(0, 240, 255, 0.1);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+}
+
+/* Backup Manager */
+.backup-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.backup-info {
+    flex: 1;
+}
+
+.backup-name {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.backup-meta {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.backup-restore-btn {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.backup-restore-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Batch Results */
+.batch-result-item {
+    background: var(--card-bg);
+    border-left: 3px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+}
+
+.batch-result-item.success {
+    border-left-color: #00F0FF;
+}
+
+.batch-result-item.error {
+    border-left-color: #ff4444;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
 /* History Section */
 .history-section {
     background: var(--card-bg);

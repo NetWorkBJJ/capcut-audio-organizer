@@ -204,6 +204,90 @@ btnReset.addEventListener('click', () => {
     hideProcessing();
 });
 
+// Batch Processing
+const btnBatch = document.getElementById('btnBatch');
+const batchModal = document.getElementById('batchModal');
+const btnCloseBatch = document.getElementById('btnCloseBatch');
+const batchProgress = document.getElementById('batchProgress');
+const batchResults = document.getElementById('batchResults');
+
+btnBatch.addEventListener('click', () => {
+    if (!window.pywebview) {
+        alert('Sistema inicializando...');
+        return;
+    }
+
+    batchModal.classList.add('active');
+    batchProgress.innerHTML = '<div class="spinner"></div><p>Selecionando arquivos...</p>';
+    batchResults.innerHTML = '';
+    btnCloseBatch.style.display = 'none';
+
+    window.pywebview.api.batch_process()
+        .then(data => {
+            batchProgress.innerHTML = '';
+
+            if (data.success) {
+                const summary = document.createElement('div');
+                summary.className = 'preview-info';
+                summary.innerHTML = `
+                    <div class="info-row">
+                        <span>Total de Arquivos:</span>
+                        <strong>${data.total}</strong>
+                    </div>
+                    <div class="info-row">
+                        <span>Processados com Sucesso:</span>
+                        <strong>${data.processed}</strong>
+                    </div>
+                `;
+                batchResults.appendChild(summary);
+
+                data.results.forEach(result => {
+                    const div = document.createElement('div');
+                    div.className = `batch-result-item ${result.success ? 'success' : 'error'}`;
+                    div.innerHTML = `
+                        <strong>${result.file}</strong><br>
+                        <small>${result.message}</small>
+                    `;
+                    batchResults.appendChild(div);
+                });
+
+                if (data.processed > 0) {
+                    celebrate();
+                }
+            } else {
+                batchResults.innerHTML = `<p style="color: #ff4444;">${data.message}</p>`;
+            }
+
+            btnCloseBatch.style.display = 'block';
+        })
+        .catch(err => {
+            batchProgress.innerHTML = '';
+            batchResults.innerHTML = `<p style="color: #ff4444;">Erro: ${err}</p>`;
+            btnCloseBatch.style.display = 'block';
+        });
+});
+
+btnCloseBatch.addEventListener('click', () => {
+    batchModal.classList.remove('active');
+});
+
+// Backup Manager
+const btnBackups = document.getElementById('btnBackups');
+const backupModal = document.getElementById('backupModal');
+const btnCloseBackup = document.getElementById('btnCloseBackup');
+const backupsList = document.getElementById('backupsList');
+
+btnBackups.addEventListener('click', () => {
+    // For now, just show a message
+    // In real use, we'd need to know which file to get backups for
+    alert('Selecione um projeto primeiro clicando na área principal!');
+    // TODO: Implement backup selection after file is chosen
+});
+
+btnCloseBackup.addEventListener('click', () => {
+    backupModal.classList.remove('active');
+});
+
 // Initialize
 loadTheme();
 loadHistory();
