@@ -1,0 +1,32 @@
+# Build files
+build/
+dist/
+*.spec
+*.exe
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local config
+config.json
+
+# Claude
+.claude/
+
+# Temp files
+*.tmp
+*.log
+nul
